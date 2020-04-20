@@ -1,13 +1,9 @@
 #!/bin/bash
-
-ES="http://<HOST>:<PORT>"
-#Example: ES="http://127.0.0.1:9200"
-ESU="<elastic_username>"
-#Example: ESU="elastic"
-ESP="<elastic_user_password>"
-#Example: ESP="password"
-DA=$(date -d "X day(s) ago" +%Y%m%d)
-#Example: DA=$(date -d "35 days ago" +%Y%m%d)
+# By default, delete older logs than 35 days
+ES="http://127.0.0.1:9200"
+ESU="elastic"
+ESP="password"
+DA=$(date -d "35 days ago" +%Y%m%d)
 INDEX_NAME="<your_index_name_here>"
 #Example: INDEX_NAME="wazuh-monitoring-3"
 LOGFILE=/tmp/delete.log

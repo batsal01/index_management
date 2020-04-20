@@ -7,7 +7,7 @@ ESU="<elastic_username>"
 ESP="<elastic_user_password>"
 #Example: ESP="password"
 DA=$(date -d "X day(s) ago" +%Y%m%d)
-#Example: DA=$(date -d "35 days ago" +%Y%m%d) => 2020.01.31 date format
+#Example: DA=$(date -d "35 days ago" +%Y%m%d)
 INDEX_NAME="<your_index_name_here>"
 #Example: INDEX_NAME="wazuh-monitoring-3"
 LOGFILE=/tmp/delete.log
@@ -26,7 +26,7 @@ declare -a INDEX=($INDICES)
         INDEX_DATE=$(echo $index | sed -n 's/.*\([0-9]\{4\}\.[0-9]\{2\}\.[0-9]\{2\}\).*/\1/p' | sed 's/\.//g')
         if [ $DA -ge $(date -d $INDEX_DATE +"%Y%m%d")  ]; then
             echo $(date +%Y-%m-%d\ %H:%M:%S)" Deleting index> $index." >> $LOGFILE
-            curl -s -XDELETE "$ES/$index/" >> $LOGFILE
+            curl -s -XDELETE "$ES/$index/" -u $ESU:$ESP >> $LOGFILE
         fi
     fi
   done

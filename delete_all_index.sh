@@ -5,7 +5,7 @@ TODAY=$(date +%Y.%m.%d)
 EU='elastic'
 EP='password'
 
-COMMAND=$(curl -s -XGET http://127.0.0.1:9200/_cat/indices?pretty -u elastic:password)
+COMMAND=$(curl -s -XGET http://127.0.0.1:9200/_cat/indices?pretty -u $EU:$EP)
 
 echo "$COMMAND" | while read LINES
 do

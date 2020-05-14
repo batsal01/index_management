@@ -4,8 +4,14 @@ DA=$(date -d "35 days ago" +%Y%m%d)
 TODAY=$(date +%Y.%m.%d)
 EU='elastic'
 EP='password'
+LOGFILE=/tmp/delete.log
 
 COMMAND=$(curl -s -XGET http://127.0.0.1:9200/_cat/indices?pretty -u $EU:$EP)
+
+# Logging
+if [ -n "$LOGFILE" ] && ! [ -e $LOGFILE ]; then
+  touch $LOGFILE
+fi
 
 echo "$COMMAND" | while read LINES
 do
@@ -16,7 +22,7 @@ do
   if [ "$EMPTY_LINES" -lt "$DA" ]
   then
     DEL=$(echo $LINES | awk '{print $3}')
-    echo "DELETING $DEL"
+    echo "DELETING $DEL" >> $LOGFILE
     curl -s -XDELETE "http://127.0.0.1:9200/$DEL" -u $EU:$EP > /dev/null
   fi
   done
